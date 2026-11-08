@@ -1,0 +1,18 @@
+# Mirrors Janeway's pyproject.toml ([tool.ruff]) so the plugin lints the same way
+# as the host application. Janeway packages are first-party for import sorting.
+line-length = 88
+target-version = "py39"
+
+[lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[lint.isort]
+known-first-party = [
+    "core", "events", "identifiers", "journal", "plugins", "press",
+    "production", "review", "security", "submission", "utils",
+]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true

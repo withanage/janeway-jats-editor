@@ -1,0 +1,43 @@
+{% extends "admin/core/base.html" %}
+
+{% block title %}JATS Editor{% endblock title %}
+{% block title-section %}XML galleys{% endblock %}
+{% block title-sub %}Open an XML galley in the pubReady editor.{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li>JATS Editor</li>
+{% endblock %}
+
+{% block body %}
+<section>
+<div class="box">
+    <div class="content">
+        {% if not enabled %}
+            <div class="bs-callout bs-callout-danger"><p>The JATS editor API is disabled for this journal. Enable it in <a href="{% url 'jats_editor_manager' %}">the plugin settings</a>.</p></div>
+        {% elif not editor_url %}
+            <div class="bs-callout bs-callout-danger"><p>No pubReady URL is configured. Set it in <a href="{% url 'jats_editor_manager' %}">the plugin settings</a>.</p></div>
+        {% endif %}
+        <table class="scroll small">
+            <thead>
+                <tr><th>Article</th><th>Stage</th><th>Galley</th><th>File</th><th>Images</th><th></th></tr>
+            </thead>
+            <tbody>
+            {% for galley in galleys %}
+                <tr>
+                    <td><a href="{% url 'manage_archive_article' galley.article.pk %}">#{{ galley.article.pk }} {{ galley.article.title|safe }}</a></td>
+                    <td>{{ galley.article.get_stage_display }}</td>
+                    <td>{{ galley.label }}</td>
+                    <td>{{ galley.file.original_filename }}</td>
+                    <td>{{ galley.images.count }}</td>
+                    <td><a class="button small" href="{% url 'jats_editor_open_galley' galley.article.pk galley.pk %}">Open in editor</a></td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="6">No XML galleys in production, proofing or published articles.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</section>
+{% endblock body %}

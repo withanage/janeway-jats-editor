@@ -1,0 +1,59 @@
+{% extends "admin/core/base.html" %}
+{% load foundation %}
+
+{% block title %}JATS Editor{% endblock title %}
+{% block title-section %}JATS Editor{% endblock %}
+{% block title-sub %}Connect this journal to a pubReady JATS XML editor.{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li><a href="{% url 'core_manager_index' %}">Manager</a></li>
+    <li><a href="{% url 'core_plugin_list' %}">Plugins</a></li>
+    <li>JATS Editor</li>
+{% endblock %}
+
+{% block body %}
+<section>
+<div class="row expanded" data-equalizer>
+    <div class="large-7 columns">
+        <div class="box" data-equalizer-watch>
+            <div class="title-area"><h2>Settings</h2></div>
+            <div class="content">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="save">
+                    {{ form|foundation }}
+                    <button type="submit" class="button success">Save settings</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="large-5 columns">
+        <div class="box" data-equalizer-watch>
+            <div class="title-area"><h2>API token</h2></div>
+            <div class="content">
+                {% if new_token %}
+                    <div class="bs-callout bs-callout-warning">
+                        <p><strong>Copy this token now.</strong> Only a hash is stored; it cannot be shown again.</p>
+                        <pre><code id="jats-editor-token">{{ new_token }}</code></pre>
+                    </div>
+                {% elif has_token %}
+                    <p>A token is configured. Generate a new one to replace it, or revoke it to block API access.</p>
+                {% else %}
+                    <p>No token is configured yet. The editor cannot connect until you generate one.</p>
+                {% endif %}
+                <p>Enter the token together with this API root in pubReady:</p>
+                <pre><code>{{ api_root }}</code></pre>
+                <form method="POST" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" name="action" value="rotate_token" class="button">Generate new token</button>
+                    {% if has_token %}
+                        <button type="submit" name="action" value="revoke_token" class="button alert">Revoke token</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock body %}

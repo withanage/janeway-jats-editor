@@ -1,0 +1,57 @@
+[
+  {
+    "group": {"name": "plugin:jats_editor"},
+    "setting": {
+      "name": "jats_editor_enabled",
+      "type": "boolean",
+      "pretty_name": "Enable JATS Editor",
+      "description": "Expose the JATS editor API for this journal.",
+      "is_translatable": false
+    },
+    "value": {"default": ""}
+  },
+  {
+    "group": {"name": "plugin:jats_editor"},
+    "setting": {
+      "name": "api_token_hash",
+      "type": "text",
+      "pretty_name": "API token hash",
+      "description": "SHA-256 hash of the per-journal API token. Managed from the plugin page.",
+      "is_translatable": false
+    },
+    "value": {"default": ""}
+  },
+  {
+    "group": {"name": "plugin:jats_editor"},
+    "setting": {
+      "name": "api_account_id",
+      "type": "number",
+      "pretty_name": "API service account",
+      "description": "Janeway account that owns files written through the editor API.",
+      "is_translatable": false
+    },
+    "value": {"default": ""}
+  },
+  {
+    "group": {"name": "plugin:jats_editor"},
+    "setting": {
+      "name": "editor_base_url",
+      "type": "text",
+      "pretty_name": "Editor base URL",
+      "description": "Base URL of the pubReady editor, e.g. https://editor.example.org",
+      "is_translatable": false
+    },
+    "value": {"default": ""}
+  },
+  {
+    "group": {"name": "plugin:jats_editor"},
+    "setting": {
+      "name": "max_upload_mb",
+      "type": "number",
+      "pretty_name": "Maximum XML or image size (MB)",
+      "description": "Requests carrying a larger document or image are rejected.",
+      "is_translatable": false
+    },
+    "value": {"default": "25"}
+  }
+]
