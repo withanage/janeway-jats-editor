@@ -6,10 +6,10 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.10"
       - run: pip install ruff
@@ -17,7 +17,7 @@ jobs:
       - run: ruff format --check .
 
   django:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -25,17 +25,17 @@ jobs:
     env:
       JANEWAY_SETTINGS_MODULE: core.dev_settings
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: plugin
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: openlibhums/janeway
           ref: ${{ matrix.janeway }}
           path: janeway
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.10"
           cache: pip
