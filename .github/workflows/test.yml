@@ -29,11 +29,13 @@ jobs:
         with:
           path: plugin
 
-      - uses: actions/checkout@v7
-        with:
-          repository: openlibhums/janeway
-          ref: ${{ matrix.janeway }}
-          path: janeway
+      # A plain clone, not actions/checkout: Janeway v1.8.2 has a submodule
+      # gitlink (src/texture) with no .gitmodules URL, which makes checkout's
+      # post-job submodule cleanup fail with a warning.
+      - name: Clone Janeway
+        env:
+          JANEWAY_REF: ${{ matrix.janeway }}
+        run: git clone --depth 1 --branch "$JANEWAY_REF" https://github.com/openlibhums/janeway.git janeway
 
       - uses: actions/setup-python@v7
         with:
